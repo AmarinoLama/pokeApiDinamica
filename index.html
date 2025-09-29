@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PokeAPI</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header>
+    <h1>PokeAPI mini</h1>
+  </header>
+
+  <main>
+    <!-- Buscador -->
+    <section id="buscador">
+      <input type="text" id="search-name" placeholder="Ingrese nombre del Pokémon">
+      <button id="buscar-btn">🔍</button>
+    </section>
+
+    <div id="img-pokedex">
+      <img src="assets/img/meme.jpg" alt="Pokedex">
+    </div>
+
+    <div id="block-info" class="oculto">
+      <section id="pokemon-info">
+        <h2 id="pokemon-name"></h2>
+        <div class="imagenes">
+          <div class="imagen-container">
+            <img id="pokemon-image-normal" alt="Pokémon normal">
+            <p>Normal</p>
+          </div>
+          <div class="imagen-container">
+            <img id="pokemon-image-shiny" alt="Pokémon shiny">
+            <p>Shiny</p>
+          </div>
+        </div>
+
+        <!-- Tipos del Pokémon -->
+        <div id="pokemon-types">
+          <h3>Tipos</h3>
+          <div id="types-container">
+          </div>
+        </div>
+
+        <div class="audio">
+          <audio controls>
+            <source id="audio-source" src="" type="audio/ogg">
+            Tu navegador no soporta audio.
+          </audio>
+        </div>
+      </section>
+    </div>
+  </main>
+  
+  <script src="index.js"></script>
+</body>
+
+</html>
