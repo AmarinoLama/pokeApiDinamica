@@ -8,17 +8,18 @@ const imgShiny = document.getElementById('pokemon-image-shiny');
 const lblNombre = document.getElementById('pokemon-name');
 const audioPlayer = document.getElementById('audio-source');
 const typeContainer = document.getElementById('types-container');
-const btnFlip = document.getElementById('btn-flip')
 
-// Elementos del swap de imágenes
-const front = document.getElementById("img-front");
-const back = document.getElementById("img-back");
-const btn = document.getElementById("swap-btn");
+const btnFlip = document.getElementById('btn-flip')
+const btnGender = document.getElementById('btn-gender')
 
 // Variables
 let isFirstSearch = true;
 let isFlipped = false;
+let isMasculine = true;
 let currentPokemonData = null;
+
+// Ruta de imagen por defecto (fallback)
+const DEFAULT_POKEMON_IMG = "assets/img/fotoPokemon.png";
 
 btnSearch.addEventListener("click", () => {
 
@@ -44,8 +45,13 @@ searchName.addEventListener("keydown", (event) => {
 });
 
 btnFlip.addEventListener("click", () => {
-    console.log("Click detectado!", new Date().getTime());
-    flipImages();
+    isFlipped = !isFlipped
+    updateImages();
+})
+
+btnGender.addEventListener("click", () => {
+    isMasculine = !isMasculine
+    updateImages();
 })
 
 function buscarPokemon(datosProcesados) {
@@ -55,8 +61,8 @@ function buscarPokemon(datosProcesados) {
     document.getElementById('block-info').classList.remove('oculto');
     document.getElementById('img-pokedex').classList.add('oculto');
 
-    imgNormal.src = datosProcesados.sprites.other.showdown.front_default
-    imgShiny.src = datosProcesados.sprites.other.showdown.front_shiny
+    imgNormal.src = resolveSprite(datosProcesados?.sprites?.other?.showdown?.front_default)
+    imgShiny.src = resolveSprite(datosProcesados?.sprites?.other?.showdown?.front_shiny)
     lblNombre.textContent = datosProcesados.name.toUpperCase()
     for (tipo of datosProcesados.types) {
         const span = document.createElement('span');
@@ -69,15 +75,29 @@ function buscarPokemon(datosProcesados) {
     audioElement.load();
 }
 
-function flipImages() {
-    if (isFlipped) {
-        imgNormal.src = currentPokemonData.sprites.other.showdown.front_default
-        imgShiny.src = currentPokemonData.sprites.other.showdown.front_shiny
+function updateImages() {
+    if (isMasculine) {
+        if (isFlipped) {
+            imgNormal.src = resolveSprite(currentPokemonData?.sprites?.other?.showdown?.front_default)
+            imgShiny.src = resolveSprite(currentPokemonData?.sprites?.other?.showdown?.front_shiny)
+        } else {
+            imgNormal.src = resolveSprite(currentPokemonData?.sprites?.other?.showdown?.back_default)
+            imgShiny.src = resolveSprite(currentPokemonData?.sprites?.other?.showdown?.back_shiny)
+        }
     } else {
-        imgNormal.src = currentPokemonData.sprites.other.showdown.back_default
-        imgShiny.src = currentPokemonData.sprites.other.showdown.back_shiny
+        if (isFlipped) {
+            imgNormal.src = resolveSprite(currentPokemonData?.sprites?.other?.showdown?.front_female)
+            imgShiny.src = resolveSprite(currentPokemonData?.sprites?.other?.showdown?.front_shiny_female)
+        } else {
+            imgNormal.src = resolveSprite(currentPokemonData?.sprites?.other?.showdown?.back_female)
+            imgShiny.src = resolveSprite(currentPokemonData?.sprites?.other?.showdown?.back_shiny_female)
+        }
     }
-    isFlipped = !isFlipped;
+}
+
+function resolveSprite(url) {
+    if (!url || typeof url !== 'string' || url.trim() === '') return "https://tepeseo.com/wp-content/uploads/2019/05/404notfound-1024x683.png";
+    return url;
 }
 
 function limpiarCampos() {
