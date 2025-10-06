@@ -179,3 +179,18 @@ footer a:hover {
 .type-dark { background-color: #705746; }
 .type-steel { background-color: #B7B7CE; color: #333; }
 .type-fairy { background-color: #D685AD; }
+
+.small {
+  width: 30px;
+  height: 30px;
+  background-color: #1dd2ff;
+  border-radius: 15px;
+  border: none;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
